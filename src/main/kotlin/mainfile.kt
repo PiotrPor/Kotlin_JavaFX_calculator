@@ -22,28 +22,29 @@ const val SzerokoscOkna : Double = 800.0
 const val WysokoscOkna : Double = 700.0
 
 class OknoKalkulatora : Application() {
-    //var klawisze_cyfr: Array<Button>
+    var wyswietlacz = TextField()
+    var klawisze_cyfr : Array<Button> = arrayOf(Button("0")) //do redefinicji
+    var klawisze_dzialan : Array<Button> = arrayOf(Button("+")) //do redefinicji
+    var klawisz_kropka : Button = Button(".")
+    var klawisz_rowna_sie : Button = Button("=")
+    var klawisz_ujemnych : Button = Button("-/+")
 
     override fun start(stage: Stage) {
         //val korzen = StackPane()
         val powierzchnia = Pane()
 
-        var wyswietlacz = TextField()
-        var klawisze_cyfr = arrayOf(Button("0"),
+        //var wyswietlacz = TextField()
+        klawisze_cyfr = arrayOf(Button("0"),
             Button("1"), Button("2"), Button("3"),
             Button("4"), Button("5"), Button("6"),
             Button("7"), Button("8"), Button("9"),
         )
-        //var a : Int
-        //var b : Int
-        //var nr : Int
         wyswietlacz.resizeRelocate(OdstLewKlaw,OdstGorKlaw,SzerTekst,WysTekst)
         powierzchnia.getChildren().add(wyswietlacz)
         for(a in 0..2)
         {
             for(b in 0..2)
             {
-                //nr = 3*a+b+1
                 //val przycisk = Button(nr.toString())
                 klawisze_cyfr[3*a+b+1].resizeRelocate(
                     OdstLewKlaw+b*(SzerKlaw+OdstPozKlaw),
@@ -61,6 +62,40 @@ class OknoKalkulatora : Application() {
             WysKlaw
         )
         powierzchnia.getChildren().add(klawisze_cyfr[0])
+        //
+        klawisze_dzialan = arrayOf(Button("+"), Button("-"), Button("*"), Button("/"))
+        for(a in 0..3)
+        {
+            klawisze_dzialan[a].resizeRelocate(
+                OdstLewKlaw+3*(SzerKlaw+OdstPozKlaw),
+                staly_pionowy_odstep+a*(WysKlaw+OdstPionKlaw),
+                SzerKlaw,
+                WysKlaw
+            )
+            powierzchnia.getChildren().add(klawisze_dzialan[a])
+        }
+        klawisz_kropka.resizeRelocate(
+            OdstLewKlaw+2*(SzerKlaw+OdstPozKlaw),
+            staly_pionowy_odstep+3*(WysKlaw+OdstPionKlaw),
+            SzerKlaw,
+            WysKlaw
+        )
+        powierzchnia.getChildren().add(klawisz_kropka)
+        klawisz_rowna_sie.resizeRelocate(
+            OdstLewKlaw+3*(SzerKlaw+OdstPozKlaw),
+            staly_pionowy_odstep+4*(WysKlaw+OdstPionKlaw),
+            SzerKlaw,
+            WysKlaw
+        )
+        powierzchnia.getChildren().add(klawisz_rowna_sie)
+        klawisz_ujemnych.resizeRelocate(
+            OdstLewKlaw,
+            staly_pionowy_odstep+3*(WysKlaw+OdstPionKlaw),
+            SzerKlaw,
+            WysKlaw
+        )
+        powierzchnia.getChildren().add(klawisz_ujemnych)
+
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
         stage.title = "Okno"
