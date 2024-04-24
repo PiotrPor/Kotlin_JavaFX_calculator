@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane
 import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import javafx.stage.Stage
+import javafx.event.EventHandler
 
 //potrzebne stale
 const val OdstGorKlaw: Double = 10.0 //odstep od gornej krawedzi okna
@@ -30,6 +31,20 @@ class OknoKalkulatora : Application() {
     var klawisz_ujemnych : Button = Button("-/+")
     var wybrana_operacja : TypDzialania = TypDzialania.Nic
 
+    fun dopisz_cyfre(cyfra : Int)
+    {
+        var tekst = wyswietlacz.text
+        if(tekst.get(0).equals("0") && tekst.length == 1)
+        {
+            tekst = cyfra.toString()
+        }
+        else
+        {
+            tekst += cyfra.toString()
+        }
+        wyswietlacz.text = tekst
+    }
+
     override fun start(stage: Stage) {
         //val korzen = StackPane()
         val powierzchnia = Pane()
@@ -42,6 +57,7 @@ class OknoKalkulatora : Application() {
         )
         wyswietlacz.resizeRelocate(OdstLewKlaw,OdstGorKlaw,SzerTekst,WysTekst)
         powierzchnia.getChildren().add(wyswietlacz)
+        wyswietlacz.text = "0"
         for(a in 0..2)
         {
             for(b in 0..2)
@@ -96,6 +112,11 @@ class OknoKalkulatora : Application() {
             WysKlaw
         )
         powierzchnia.getChildren().add(klawisz_ujemnych)
+        //
+        for(a in 0..9)
+        {
+            klawisze_cyfr[a].onAction = EventHandler{dopisz_cyfre(a)}
+        }
 
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
