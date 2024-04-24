@@ -117,6 +117,10 @@ class OknoKalkulatora : Application() {
         {
             klawisze_cyfr[a].onAction = EventHandler{dopisz_cyfre(a)}
         }
+        klawisze_dzialan[0].onAction = EventHandler{ wybrana_operacja = TypDzialania.Dodawanie }
+        klawisze_dzialan[1].onAction = EventHandler{ wybrana_operacja = TypDzialania.Odejmowanie }
+        klawisze_dzialan[2].onAction = EventHandler{ wybrana_operacja = TypDzialania.Mnozenie }
+        klawisze_dzialan[3].onAction = EventHandler{ wybrana_operacja = TypDzialania.Dzielenie }
 
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
