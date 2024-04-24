@@ -28,6 +28,7 @@ class OknoKalkulatora : Application() {
     var klawisz_kropka : Button = Button(".")
     var klawisz_rowna_sie : Button = Button("=")
     var klawisz_ujemnych : Button = Button("-/+")
+    var wybrana_operacja : TypDzialania = TypDzialania.Nic
 
     override fun start(stage: Stage) {
         //val korzen = StackPane()
