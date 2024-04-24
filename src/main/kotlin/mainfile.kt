@@ -29,7 +29,16 @@ class OknoKalkulatora : Application() {
     var klawisz_kropka : Button = Button(".")
     var klawisz_rowna_sie : Button = Button("=")
     var klawisz_ujemnych : Button = Button("-/+")
+    //
     var wybrana_operacja : TypDzialania = TypDzialania.Nic
+    var A : Double = 0.0 //liczba po prawej stronie operatora arytmetycznego
+    var B : Double = 0.0 //liczba po lewej stronie operatora arytmetycznego
+    //
+    var wpisano_pierwsza_cyfre : Boolean = false
+    var wpisano_kropke : Boolean = false
+    var wpisano_pierwsza_liczbe : Boolean = false
+    var wpisano_druga_liczbe : Boolean = false
+    var dzielenie_przez_0 : Boolean = false
 
     fun dopisz_cyfre(cyfra : Int)
     {
@@ -43,6 +52,11 @@ class OknoKalkulatora : Application() {
             tekst += cyfra.toString()
         }
         wyswietlacz.text = tekst
+    }
+
+    fun napisz_komunikat(wpis : String)
+    {
+        wyswietlacz.text = wpis
     }
 
     override fun start(stage: Stage) {
@@ -121,12 +135,48 @@ class OknoKalkulatora : Application() {
         klawisze_dzialan[1].onAction = EventHandler{ wybrana_operacja = TypDzialania.Odejmowanie }
         klawisze_dzialan[2].onAction = EventHandler{ wybrana_operacja = TypDzialania.Mnozenie }
         klawisze_dzialan[3].onAction = EventHandler{ wybrana_operacja = TypDzialania.Dzielenie }
+        klawisz_rowna_sie.onAction = EventHandler{nacisniecie_rowna_sie()}
 
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
         stage.title = "Okno"
         stage.scene = scena
         stage.show()
+    }
+
+    fun policz() : Double
+    {
+        var wynik: Double = 0.0
+        if(B == 0.0 && wybrana_operacja == TypDzialania.Dzielenie)
+        {
+            dzielenie_przez_0 = true
+        }
+        else
+        {
+            if(wybrana_operacja == TypDzialania.Dodawanie) {wynik=A+B}
+            if(wybrana_operacja == TypDzialania.Odejmowanie) {wynik=A-B}
+            if(wybrana_operacja == TypDzialania.Mnozenie) {wynik=A*B}
+            if(wybrana_operacja == TypDzialania.Dzielenie) {wynik=A/B}
+        }
+        return wynik
+    }
+
+    fun nacisniecie_rowna_sie()
+    {
+        B = wyswietlacz.getText().toDouble()
+        if(wybrana_operacja != TypDzialania.Nic)
+        {
+            val wynik : Double = policz()
+            if(dzielenie_przez_0)
+            {
+                napisz_komunikat("dzielenie przez zero!")
+            }
+            else
+            {
+                B = wynik
+                wyswietlacz.text = wynik.toString()
+            }
+        }
     }
 }
 
