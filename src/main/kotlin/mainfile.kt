@@ -6,6 +6,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import javafx.stage.Stage
 import javafx.event.EventHandler
+import kotlin.math.sqrt
 
 //potrzebne stale
 const val OdstGorKlaw: Double = 10.0 //odstep od gornej krawedzi okna
@@ -29,6 +30,7 @@ class OknoKalkulatora : Application() {
     var klawisz_kropka : Button = Button(".")
     var klawisz_rowna_sie : Button = Button("=")
     var klawisz_ujemnych : Button = Button("-/+")
+    var klawisz_pierwiastka : Button = Button("sqrt(x)")
     //
     var wybrana_operacja : TypDzialania = TypDzialania.Nic
     var A : Double = 0.0 //liczba po prawej stronie operatora arytmetycznego
@@ -135,6 +137,13 @@ class OknoKalkulatora : Application() {
             WysKlaw
         )
         powierzchnia.getChildren().add(klawisz_ujemnych)
+        klawisz_pierwiastka.resizeRelocate(
+            OdstLewKlaw+2*(SzerKlaw+OdstPozKlaw),
+            staly_pionowy_odstep+4*(WysKlaw+OdstPionKlaw),
+            SzerKlaw,
+            WysKlaw
+        )
+        powierzchnia.getChildren().add(klawisz_pierwiastka)
         //
         for(a in 0..9)
         {
@@ -147,6 +156,7 @@ class OknoKalkulatora : Application() {
         klawisz_rowna_sie.onAction = EventHandler{nacisniecie_rowna_sie()}
         klawisz_kropka.onAction = EventHandler{ dopisz_kropke() }
         klawisz_ujemnych.onAction = EventHandler{dopisz_minus()}
+        klawisz_pierwiastka.onAction = EventHandler{ pierwiastkowanie() }
 
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
@@ -218,6 +228,20 @@ class OknoKalkulatora : Application() {
                 B = wynik
                 wyswietlacz.text = wynik.toString()
             }
+        }
+    }
+
+    fun pierwiastkowanie()
+    {
+        var liczba : Double = wyswietlacz.text.toDouble()
+        if(liczba >= 0)
+        {
+            liczba = sqrt(liczba)
+            wyswietlacz.text = liczba.toString()
+        }
+        else
+        {
+            napisz_komunikat("Pierwiastek z ujemnej jest urojony")
         }
     }
 }
