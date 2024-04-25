@@ -43,9 +43,11 @@ class OknoKalkulatora : Application() {
     fun dopisz_cyfre(cyfra : Int)
     {
         var tekst = wyswietlacz.text
-        if(tekst.get(0).equals("0") && tekst.length == 1)
+        //if(tekst.get(0).equals("0") && tekst.length == 1)
+        if(!wpisano_pierwsza_cyfre)
         {
             tekst = cyfra.toString()
+            wpisano_pierwsza_cyfre = true
         }
         else
         {
@@ -131,10 +133,10 @@ class OknoKalkulatora : Application() {
         {
             klawisze_cyfr[a].onAction = EventHandler{dopisz_cyfre(a)}
         }
-        klawisze_dzialan[0].onAction = EventHandler{ wybrana_operacja = TypDzialania.Dodawanie }
-        klawisze_dzialan[1].onAction = EventHandler{ wybrana_operacja = TypDzialania.Odejmowanie }
-        klawisze_dzialan[2].onAction = EventHandler{ wybrana_operacja = TypDzialania.Mnozenie }
-        klawisze_dzialan[3].onAction = EventHandler{ wybrana_operacja = TypDzialania.Dzielenie }
+        klawisze_dzialan[0].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Dodawanie) }
+        klawisze_dzialan[1].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Odejmowanie) }
+        klawisze_dzialan[2].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Mnozenie) }
+        klawisze_dzialan[3].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Dzielenie) }
         klawisz_rowna_sie.onAction = EventHandler{nacisniecie_rowna_sie()}
 
 
@@ -159,6 +161,23 @@ class OknoKalkulatora : Application() {
             if(wybrana_operacja == TypDzialania.Dzielenie) {wynik=A/B}
         }
         return wynik
+    }
+
+    fun ustaw_typ_dzialania(wybrane : TypDzialania)
+    {
+        wybrana_operacja = wybrane
+        if(!wpisano_pierwsza_liczbe)
+        {
+            wpisano_pierwsza_liczbe = true //rozpisac bardziej?
+            wpisano_pierwsza_cyfre = false
+            A = wyswietlacz.text.toDouble()
+        }
+        else
+        {
+            B = wyswietlacz.text.toDouble()
+            policz()
+        }
+
     }
 
     fun nacisniecie_rowna_sie()
