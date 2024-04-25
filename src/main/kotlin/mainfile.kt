@@ -148,6 +148,7 @@ class OknoKalkulatora : Application() {
         klawisze_dzialan[3].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Dzielenie) }
         klawisz_rowna_sie.onAction = EventHandler{nacisniecie_rowna_sie()}
         klawisz_kropka.onAction = EventHandler{ dopisz_kropke() }
+        klawisz_ujemnych.onAction = EventHandler{dopisz_minus()}
 
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
@@ -189,6 +190,20 @@ class OknoKalkulatora : Application() {
             policz()
         }
 
+    }
+
+    fun dopisz_minus()
+    {
+        var tekstowe = wyswietlacz.text
+        if(tekstowe.get(0).equals('-'))
+        {
+            tekstowe = tekstowe.drop(1)
+        }
+        else
+        {
+            tekstowe = "-"+tekstowe
+        }
+        wyswietlacz.text = tekstowe
     }
 
     fun nacisniecie_rowna_sie()
