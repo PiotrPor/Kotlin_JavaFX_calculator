@@ -56,6 +56,15 @@ class OknoKalkulatora : Application() {
         wyswietlacz.text = tekst
     }
 
+    fun dopisz_kropke()
+    {
+        if(!wpisano_kropke)
+        {
+            wyswietlacz.text += "."
+            wpisano_kropke = true
+        }
+    }
+
     fun napisz_komunikat(wpis : String)
     {
         wyswietlacz.text = wpis
@@ -138,6 +147,7 @@ class OknoKalkulatora : Application() {
         klawisze_dzialan[2].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Mnozenie) }
         klawisze_dzialan[3].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Dzielenie) }
         klawisz_rowna_sie.onAction = EventHandler{nacisniecie_rowna_sie()}
+        klawisz_kropka.onAction = EventHandler{ dopisz_kropke() }
 
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
@@ -170,6 +180,7 @@ class OknoKalkulatora : Application() {
         {
             wpisano_pierwsza_liczbe = true //rozpisac bardziej?
             wpisano_pierwsza_cyfre = false
+            wpisano_kropke = false //napewno tu?
             A = wyswietlacz.text.toDouble()
         }
         else
