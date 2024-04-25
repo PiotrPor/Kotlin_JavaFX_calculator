@@ -37,13 +37,11 @@ class OknoKalkulatora : Application() {
     var wpisano_pierwsza_cyfre : Boolean = false
     var wpisano_kropke : Boolean = false
     var wpisano_pierwsza_liczbe : Boolean = false
-    var wpisano_druga_liczbe : Boolean = false
     var dzielenie_przez_0 : Boolean = false
 
     fun dopisz_cyfre(cyfra : Int)
     {
         var tekst = wyswietlacz.text
-        //if(tekst.get(0).equals("0") && tekst.length == 1)
         if(!wpisano_pierwsza_cyfre)
         {
             tekst = cyfra.toString()
@@ -51,7 +49,7 @@ class OknoKalkulatora : Application() {
         }
         else
         {
-            tekst += cyfra.toString()
+            tekst = tekst.plus(cyfra.toString())
         }
         wyswietlacz.text = tekst
     }
@@ -60,7 +58,7 @@ class OknoKalkulatora : Application() {
     {
         if(!wpisano_kropke)
         {
-            wyswietlacz.text += "."
+            wyswietlacz.text = wyswietlacz.text.plus(".")
             wpisano_kropke = true
         }
     }
@@ -186,8 +184,7 @@ class OknoKalkulatora : Application() {
         }
         else
         {
-            B = wyswietlacz.text.toDouble()
-            policz()
+            nacisniecie_rowna_sie()
         }
 
     }
