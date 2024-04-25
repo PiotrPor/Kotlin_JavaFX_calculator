@@ -31,6 +31,8 @@ class OknoKalkulatora : Application() {
     var klawisz_rowna_sie : Button = Button("=")
     var klawisz_ujemnych : Button = Button("-/+")
     var klawisz_pierwiastka : Button = Button("sqrt(x)")
+    var klawisz_res_liczba : Button = Button("reset liczby")
+    var klawisz_res_total : Button = Button("reset kalkulatora")
     //
     var wybrana_operacja : TypDzialania = TypDzialania.Nic
     var A : Double = 0.0 //liczba po prawej stronie operatora arytmetycznego
@@ -144,6 +146,20 @@ class OknoKalkulatora : Application() {
             WysKlaw
         )
         powierzchnia.getChildren().add(klawisz_pierwiastka)
+        klawisz_res_liczba.resizeRelocate(
+            OdstLewKlaw,
+            staly_pionowy_odstep+5*(WysKlaw+OdstPionKlaw),
+            SzerKlaw,
+            WysKlaw
+        )
+        powierzchnia.getChildren().add(klawisz_res_liczba)
+        klawisz_res_total.resizeRelocate(
+            OdstLewKlaw,
+            staly_pionowy_odstep+6*(WysKlaw+OdstPionKlaw),
+            SzerKlaw,
+            WysKlaw
+        )
+        powierzchnia.getChildren().add(klawisz_res_total)
         //
         for(a in 0..9)
         {
@@ -157,7 +173,8 @@ class OknoKalkulatora : Application() {
         klawisz_kropka.onAction = EventHandler{ dopisz_kropke() }
         klawisz_ujemnych.onAction = EventHandler{dopisz_minus()}
         klawisz_pierwiastka.onAction = EventHandler{ pierwiastkowanie() }
-
+        klawisz_res_liczba.onAction = EventHandler{ resetuj_liczbe() }
+        klawisz_res_total.onAction = EventHandler{ resetuj_kalkulator() }
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
         stage.title = "Okno"
@@ -243,6 +260,25 @@ class OknoKalkulatora : Application() {
         {
             napisz_komunikat("Pierwiastek z ujemnej jest urojony")
         }
+    }
+
+    fun resetuj_liczbe()
+    {
+        wyswietlacz.text = "0.0"
+        wpisano_pierwsza_cyfre = false
+        wpisano_kropke = false
+    }
+
+    fun resetuj_kalkulator()
+    {
+        wyswietlacz.text = "0.0"
+        wpisano_pierwsza_cyfre = false
+        wpisano_kropke = false
+        wpisano_pierwsza_liczbe = false
+        dzielenie_przez_0 = false
+        A = 0.0
+        B = 0.0
+        wybrana_operacja = TypDzialania.Nic
     }
 }
 
