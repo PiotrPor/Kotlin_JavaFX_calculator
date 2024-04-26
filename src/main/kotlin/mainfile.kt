@@ -59,15 +59,6 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         wyswietlacz.text = tekst
     }
 
-    fun dopisz_kropke()
-    {
-        if(!wpisano_kropke)
-        {
-            wyswietlacz.text = wyswietlacz.text.plus(".")
-            wpisano_kropke = true
-        }
-    }
-
     fun napisz_komunikat(wpis : String)
     {
         wyswietlacz.text = wpis
@@ -183,52 +174,25 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         stage.show()
     }
 
-    fun policz() : Double
-    {
+    fun policz() : Double {
         var wynik: Double = 0.0
-        if(B == 0.0 && wybrana_operacja == TypDzialania.Dzielenie)
-        {
+        if (B == 0.0 && wybrana_operacja == TypDzialania.Dzielenie) {
             dzielenie_przez_0 = true
-        }
-        else
-        {
-            if(wybrana_operacja == TypDzialania.Dodawanie) {wynik=A+B}
-            if(wybrana_operacja == TypDzialania.Odejmowanie) {wynik=A-B}
-            if(wybrana_operacja == TypDzialania.Mnozenie) {wynik=A*B}
-            if(wybrana_operacja == TypDzialania.Dzielenie) {wynik=A/B}
+        } else {
+            if (wybrana_operacja == TypDzialania.Dodawanie) {
+                wynik = A + B
+            }
+            if (wybrana_operacja == TypDzialania.Odejmowanie) {
+                wynik = A - B
+            }
+            if (wybrana_operacja == TypDzialania.Mnozenie) {
+                wynik = A * B
+            }
+            if (wybrana_operacja == TypDzialania.Dzielenie) {
+                wynik = A / B
+            }
         }
         return wynik
-    }
-
-    fun ustaw_typ_dzialania(wybrane : TypDzialania)
-    {
-        wybrana_operacja = wybrane
-        if(!wpisano_pierwsza_liczbe)
-        {
-            wpisano_pierwsza_liczbe = true //rozpisac bardziej?
-            wpisano_pierwsza_cyfre = false
-            wpisano_kropke = false //napewno tu?
-            A = wyswietlacz.text.toDouble()
-        }
-        else
-        {
-            nacisniecie_rowna_sie()
-        }
-
-    }
-
-    fun dopisz_minus()
-    {
-        var tekstowe = wyswietlacz.text
-        if(tekstowe.get(0).equals('-'))
-        {
-            tekstowe = tekstowe.drop(1)
-        }
-        else
-        {
-            tekstowe = "-"+tekstowe
-        }
-        wyswietlacz.text = tekstowe
     }
 
     fun nacisniecie_rowna_sie()
@@ -249,42 +213,10 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         }
     }
 
-    fun pierwiastkowanie()
-    {
-        var liczba : Double = wyswietlacz.text.toDouble()
-        if(liczba >= 0)
-        {
-            liczba = sqrt(liczba)
-            wyswietlacz.text = liczba.toString()
-        }
-        else
-        {
-            napisz_komunikat("Pierwiastek z ujemnej jest urojony")
-        }
-    }
-
-    fun resetuj_liczbe()
-    {
-        wyswietlacz.text = "0.0"
-        wpisano_pierwsza_cyfre = false
-        wpisano_kropke = false
-    }
-
-    fun resetuj_kalkulator()
-    {
-        wyswietlacz.text = "0.0"
-        wpisano_pierwsza_cyfre = false
-        wpisano_kropke = false
-        wpisano_pierwsza_liczbe = false
-        dzielenie_przez_0 = false
-        A = 0.0
-        B = 0.0
-        wybrana_operacja = TypDzialania.Nic
-    }
-
     override fun handle(wydarzenie : ActionEvent)
     {
         val zrodlo = wydarzenie.getSource()
+        
         for(a in 0..9)
         {
             if(klawisze_cyfr[a] == zrodlo)
@@ -293,16 +225,85 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
                 break
             }
         }
-        if(klawisze_dzialan[0] == zrodlo) {wybrana_operacja=TypDzialania.Dodawanie}
-        if(klawisze_dzialan[1] == zrodlo) {wybrana_operacja=TypDzialania.Odejmowanie}
-        if(klawisze_dzialan[2] == zrodlo) {wybrana_operacja=TypDzialania.Mnozenie}
-        if(klawisze_dzialan[3] == zrodlo) {wybrana_operacja=TypDzialania.Dzielenie}
+
+        var numer_wybranej_operacji = -1
+        for(a in 0..3)
+        {
+            if(klawisze_dzialan[a] == zrodlo)
+            {
+                numer_wybranej_operacji = a
+                break
+            }
+        }
+        if(numer_wybranej_operacji != -1)
+        {
+            wybrana_operacja = TypDzialania.entries.get(numer_wybranej_operacji)
+            if(!wpisano_pierwsza_liczbe)
+            {
+                wpisano_pierwsza_liczbe = true //rozpisac bardziej?
+                wpisano_pierwsza_cyfre = false
+                wpisano_kropke = false //napewno tu?
+                A = wyswietlacz.text.toDouble()
+            }
+            else
+            {
+                nacisniecie_rowna_sie()
+            }
+        }
+
         if(klawisz_rowna_sie == zrodlo) {nacisniecie_rowna_sie()}
-        if(klawisz_kropka == zrodlo) {dopisz_kropke()}
-        if(klawisz_ujemnych == zrodlo) {dopisz_minus()}
-        if(klawisz_pierwiastka == zrodlo) {pierwiastkowanie()}
-        if(klawisz_res_liczba == zrodlo) {resetuj_liczbe()}
-        if(klawisz_res_total == zrodlo) {resetuj_kalkulator()}
+
+        if(klawisz_kropka == zrodlo)
+        {
+            if(!wpisano_kropke)
+            {
+                wyswietlacz.text = wyswietlacz.text.plus(".")
+                wpisano_kropke = true
+            }
+        }
+
+        if(klawisz_ujemnych == zrodlo)
+        {
+            var tekstowe = wyswietlacz.text
+            if(tekstowe.get(0).equals('-'))
+            {
+                tekstowe = tekstowe.drop(1)
+            }
+            else
+            {
+                tekstowe = "-"+tekstowe
+            }
+            wyswietlacz.text = tekstowe
+        }
+
+        if(klawisz_pierwiastka == zrodlo)
+        {
+            var liczba : Double = wyswietlacz.text.toDouble()
+            if(liczba >= 0)
+            {
+                liczba = sqrt(liczba)
+                wyswietlacz.text = liczba.toString()
+            }
+            else
+            {
+                napisz_komunikat("Pierwiastek z ujemnej jest urojony")
+            }
+        }
+
+        if(klawisz_res_liczba == zrodlo || klawisz_res_total == zrodlo)
+        {
+            wyswietlacz.text = "0.0"
+            wpisano_pierwsza_cyfre = false
+            wpisano_kropke = false
+            if(klawisz_res_total == zrodlo)
+            {
+                wpisano_pierwsza_liczbe = false
+                dzielenie_przez_0 = false
+                A = 0.0
+                B = 0.0
+                wybrana_operacja = TypDzialania.Nic
+            }
+        }
     }
 }
 
