@@ -74,7 +74,8 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
             Button("4"), Button("5"), Button("6"),
             Button("7"), Button("8"), Button("9"),
         )
-        wyswietlacz.resizeRelocate(OdstLewKlaw,OdstGorKlaw,SzerTekst,WysTekst)
+        wyswietlacz.relocate(OdstLewKlaw,OdstGorKlaw)
+        wyswietlacz.setPrefSize(SzerTekst,WysTekst)
         powierzchnia.getChildren().add(wyswietlacz)
         wyswietlacz.text = "0"
         for(a in 0..2)
@@ -82,91 +83,81 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
             for(b in 0..2)
             {
                 //val przycisk = Button(nr.toString())
-                klawisze_cyfr[3*a+b+1].resizeRelocate(
+                klawisze_cyfr[3*a+b+1].relocate(
                     OdstLewKlaw+b*(SzerKlaw+OdstPozKlaw),
-                    staly_pionowy_odstep+a*(WysKlaw+OdstPionKlaw),
-                    SzerKlaw,
-                    WysKlaw
+                    staly_pionowy_odstep+a*(WysKlaw+OdstPionKlaw)
                 )
                 powierzchnia.getChildren().add(klawisze_cyfr[3*a+b+1])
             }
         }
-        klawisze_cyfr[0].resizeRelocate(
+        klawisze_cyfr[0].relocate(
             OdstLewKlaw+SzerKlaw+OdstPozKlaw,
             staly_pionowy_odstep+3*(WysKlaw+OdstPionKlaw),
-            SzerKlaw,
-            WysKlaw
         )
         powierzchnia.getChildren().add(klawisze_cyfr[0])
         //
         klawisze_dzialan = arrayOf(Button("+"), Button("-"), Button("*"), Button("/"))
         for(a in 0..3)
         {
-            klawisze_dzialan[a].resizeRelocate(
+            klawisze_dzialan[a].relocate(
                 OdstLewKlaw+3*(SzerKlaw+OdstPozKlaw),
                 staly_pionowy_odstep+a*(WysKlaw+OdstPionKlaw),
-                SzerKlaw,
-                WysKlaw
             )
             powierzchnia.getChildren().add(klawisze_dzialan[a])
         }
-        klawisz_kropka.resizeRelocate(
+        klawisz_kropka.relocate(
             OdstLewKlaw+2*(SzerKlaw+OdstPozKlaw),
             staly_pionowy_odstep+3*(WysKlaw+OdstPionKlaw),
-            SzerKlaw,
-            WysKlaw
         )
         powierzchnia.getChildren().add(klawisz_kropka)
-        klawisz_rowna_sie.resizeRelocate(
+        klawisz_rowna_sie.relocate(
             OdstLewKlaw+3*(SzerKlaw+OdstPozKlaw),
             staly_pionowy_odstep+4*(WysKlaw+OdstPionKlaw),
-            SzerKlaw,
-            WysKlaw
         )
         powierzchnia.getChildren().add(klawisz_rowna_sie)
-        klawisz_ujemnych.resizeRelocate(
+        klawisz_ujemnych.relocate(
             OdstLewKlaw,
             staly_pionowy_odstep+3*(WysKlaw+OdstPionKlaw),
-            SzerKlaw,
-            WysKlaw
         )
         powierzchnia.getChildren().add(klawisz_ujemnych)
-        klawisz_pierwiastka.resizeRelocate(
+        klawisz_pierwiastka.relocate(
             OdstLewKlaw+2*(SzerKlaw+OdstPozKlaw),
             staly_pionowy_odstep+4*(WysKlaw+OdstPionKlaw),
-            SzerKlaw,
-            WysKlaw
         )
         powierzchnia.getChildren().add(klawisz_pierwiastka)
-        klawisz_res_liczba.resizeRelocate(
+        klawisz_res_liczba.relocate(
             OdstLewKlaw,
-            staly_pionowy_odstep+5*(WysKlaw+OdstPionKlaw),
-            SzerKlaw,
-            WysKlaw
+            staly_pionowy_odstep+4*(WysKlaw+OdstPionKlaw),
         )
         powierzchnia.getChildren().add(klawisz_res_liczba)
-        klawisz_res_total.resizeRelocate(
+        klawisz_res_total.relocate(
             OdstLewKlaw,
-            staly_pionowy_odstep+6*(WysKlaw+OdstPionKlaw),
-            SzerKlaw,
-            WysKlaw
+            staly_pionowy_odstep+5*(WysKlaw+OdstPionKlaw),
         )
         powierzchnia.getChildren().add(klawisz_res_total)
         //
         for(a in 0..9)
         {
             klawisze_cyfr[a].setOnAction(this)
+            klawisze_cyfr[a].setPrefSize(SzerKlaw,WysKlaw)
         }
         for(a in 0..3)
         {
             klawisze_dzialan[a].setOnAction(this)
+            klawisze_dzialan[a].setPrefSize(SzerKlaw,WysKlaw)
         }
         klawisz_rowna_sie.setOnAction(this)
+        klawisz_rowna_sie.setPrefSize(SzerKlaw,WysKlaw)
         klawisz_kropka.setOnAction(this)
+        klawisz_kropka.setPrefSize(SzerKlaw,WysKlaw)
         klawisz_ujemnych.setOnAction(this)
+        klawisz_ujemnych.setPrefSize(SzerKlaw,WysKlaw)
         klawisz_pierwiastka.setOnAction(this)
+        klawisz_pierwiastka.setPrefSize(SzerKlaw,WysKlaw)
         klawisz_res_liczba.setOnAction(this)
+        klawisz_res_liczba.setPrefSize(SzerKlaw,WysKlaw)
         klawisz_res_total.setOnAction(this)
+        klawisz_res_total.setPrefSize(2*SzerKlaw,WysKlaw)
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
         stage.title = "Okno"
@@ -216,7 +207,7 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
     override fun handle(wydarzenie : ActionEvent)
     {
         val zrodlo = wydarzenie.getSource()
-        
+
         for(a in 0..9)
         {
             if(klawisze_cyfr[a] == zrodlo)
