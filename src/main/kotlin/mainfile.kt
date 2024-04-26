@@ -6,6 +6,7 @@ import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import javafx.stage.Stage
 import javafx.event.EventHandler
+import javafx.event.ActionEvent
 import kotlin.math.sqrt
 
 //potrzebne stale
@@ -23,7 +24,7 @@ const val staly_pionowy_odstep = OdstGorKlaw+WysTekst+OdstKlawTekst
 const val SzerokoscOkna : Double = 800.0
 const val WysokoscOkna : Double = 700.0
 
-class OknoKalkulatora : Application() {
+class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
     var wyswietlacz = TextField()
     var klawisze_cyfr : Array<Button> = arrayOf(Button("0")) //do redefinicji
     var klawisze_dzialan : Array<Button> = arrayOf(Button("+")) //do redefinicji
@@ -163,18 +164,18 @@ class OknoKalkulatora : Application() {
         //
         for(a in 0..9)
         {
-            klawisze_cyfr[a].onAction = EventHandler{dopisz_cyfre(a)}
+            klawisze_cyfr[a].setOnAction(this)
         }
-        klawisze_dzialan[0].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Dodawanie) }
-        klawisze_dzialan[1].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Odejmowanie) }
-        klawisze_dzialan[2].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Mnozenie) }
-        klawisze_dzialan[3].onAction = EventHandler{ ustaw_typ_dzialania(TypDzialania.Dzielenie) }
-        klawisz_rowna_sie.onAction = EventHandler{nacisniecie_rowna_sie()}
-        klawisz_kropka.onAction = EventHandler{ dopisz_kropke() }
-        klawisz_ujemnych.onAction = EventHandler{dopisz_minus()}
-        klawisz_pierwiastka.onAction = EventHandler{ pierwiastkowanie() }
-        klawisz_res_liczba.onAction = EventHandler{ resetuj_liczbe() }
-        klawisz_res_total.onAction = EventHandler{ resetuj_kalkulator() }
+        for(a in 0..3)
+        {
+            klawisze_dzialan[a].setOnAction(this)
+        }
+        klawisz_rowna_sie.setOnAction(this)
+        klawisz_kropka.setOnAction(this)
+        klawisz_ujemnych.setOnAction(this)
+        klawisz_pierwiastka.setOnAction(this)
+        klawisz_res_liczba.setOnAction(this)
+        klawisz_res_total.setOnAction(this)
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
         stage.title = "Okno"
@@ -279,6 +280,29 @@ class OknoKalkulatora : Application() {
         A = 0.0
         B = 0.0
         wybrana_operacja = TypDzialania.Nic
+    }
+
+    override fun handle(wydarzenie : ActionEvent)
+    {
+        val zrodlo = wydarzenie.getSource()
+        for(a in 0..9)
+        {
+            if(klawisze_cyfr[a] == zrodlo)
+            {
+                dopisz_cyfre(a)
+                break
+            }
+        }
+        if(klawisze_dzialan[0] == zrodlo) {wybrana_operacja=TypDzialania.Dodawanie}
+        if(klawisze_dzialan[1] == zrodlo) {wybrana_operacja=TypDzialania.Odejmowanie}
+        if(klawisze_dzialan[2] == zrodlo) {wybrana_operacja=TypDzialania.Mnozenie}
+        if(klawisze_dzialan[3] == zrodlo) {wybrana_operacja=TypDzialania.Dzielenie}
+        if(klawisz_rowna_sie == zrodlo) {nacisniecie_rowna_sie()}
+        if(klawisz_kropka == zrodlo) {dopisz_kropke()}
+        if(klawisz_ujemnych == zrodlo) {dopisz_minus()}
+        if(klawisz_pierwiastka == zrodlo) {pierwiastkowanie()}
+        if(klawisz_res_liczba == zrodlo) {resetuj_liczbe()}
+        if(klawisz_res_total == zrodlo) {resetuj_kalkulator()}
     }
 }
 
