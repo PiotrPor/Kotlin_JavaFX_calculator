@@ -40,7 +40,6 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
     var B : Double = 0.0 //liczba po lewej stronie operatora arytmetycznego
     //
     var wpisano_pierwsza_cyfre : Boolean = false
-    var wpisano_kropke : Boolean = false
     var wpisano_pierwsza_liczbe : Boolean = false
     var dzielenie_przez_0 : Boolean = false
 
@@ -233,7 +232,6 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
             {
                 wpisano_pierwsza_liczbe = true //rozpisac bardziej?
                 wpisano_pierwsza_cyfre = false
-                wpisano_kropke = false //napewno tu?
                 A = wyswietlacz.text.toDouble()
             }
             else
@@ -246,10 +244,9 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
 
         if(klawisz_kropka == zrodlo)
         {
-            if(!wpisano_kropke)
+            if(!wyswietlacz.text.contains('.'))
             {
                 wyswietlacz.text = wyswietlacz.text.plus(".")
-                wpisano_kropke = true
             }
         }
 
@@ -285,7 +282,6 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         {
             wyswietlacz.text = "0.0"
             wpisano_pierwsza_cyfre = false
-            wpisano_kropke = false
             if(klawisz_res_total == zrodlo)
             {
                 wpisano_pierwsza_liczbe = false
