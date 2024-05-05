@@ -237,6 +237,7 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
             else
             {
                 nacisniecie_rowna_sie()
+                wpisano_pierwsza_cyfre = false
             }
         }
 
