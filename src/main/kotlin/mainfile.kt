@@ -8,6 +8,7 @@ import javafx.stage.Stage
 import javafx.event.EventHandler
 import javafx.event.ActionEvent
 import kotlin.math.sqrt
+import javafx.scene.text.Font
 
 //potrzebne stale
 const val OdstGorKlaw: Double = 13.0 //odstep od gornej krawedzi okna
@@ -76,6 +77,7 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         wyswietlacz.relocate(OdstLewKlaw,OdstGorKlaw)
         wyswietlacz.setPrefSize(SzerTekst,WysTekst)
         powierzchnia.getChildren().add(wyswietlacz)
+        wyswietlacz.setFont(Font(0.5*WysTekst))
         wyswietlacz.text = "0"
         for(a in 0..2)
         {
@@ -87,6 +89,7 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
                     staly_pionowy_odstep+a*(WysKlaw+OdstPionKlaw)
                 )
                 powierzchnia.getChildren().add(klawisze_cyfr[3*a+b+1])
+                klawisze_cyfr[3*a+b+1].setFont(Font(0.5*WysKlaw))
             }
         }
         klawisze_cyfr[0].relocate(
@@ -94,6 +97,7 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
             staly_pionowy_odstep+3*(WysKlaw+OdstPionKlaw),
         )
         powierzchnia.getChildren().add(klawisze_cyfr[0])
+        klawisze_cyfr[0].setFont(Font(0.5*WysKlaw))
         //
         klawisze_dzialan = arrayOf(Button("+"), Button("-"), Button("*"), Button("/"))
         for(a in 0..3)
@@ -103,36 +107,43 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
                 staly_pionowy_odstep+a*(WysKlaw+OdstPionKlaw),
             )
             powierzchnia.getChildren().add(klawisze_dzialan[a])
+            klawisze_dzialan[a].setFont(Font(0.4*WysKlaw))
         }
         klawisz_kropka.relocate(
             OdstLewKlaw+2*(SzerKlaw+OdstPozKlaw),
             staly_pionowy_odstep+3*(WysKlaw+OdstPionKlaw),
         )
+        klawisz_kropka.setFont(Font(0.5*WysKlaw))
         powierzchnia.getChildren().add(klawisz_kropka)
         klawisz_rowna_sie.relocate(
             OdstLewKlaw+3*(SzerKlaw+OdstPozKlaw),
             staly_pionowy_odstep+4*(WysKlaw+OdstPionKlaw),
         )
+        klawisz_rowna_sie.setFont(Font(0.4*WysKlaw))
         powierzchnia.getChildren().add(klawisz_rowna_sie)
         klawisz_ujemnych.relocate(
             OdstLewKlaw,
             staly_pionowy_odstep+3*(WysKlaw+OdstPionKlaw),
         )
+        klawisz_ujemnych.setFont(Font(0.3*WysKlaw))
         powierzchnia.getChildren().add(klawisz_ujemnych)
         klawisz_pierwiastka.relocate(
             OdstLewKlaw+2*(SzerKlaw+OdstPozKlaw),
             staly_pionowy_odstep+4*(WysKlaw+OdstPionKlaw),
         )
+        klawisz_pierwiastka.setFont(Font(0.2*WysKlaw))
         powierzchnia.getChildren().add(klawisz_pierwiastka)
         klawisz_res_liczba.relocate(
             OdstLewKlaw,
             staly_pionowy_odstep+4*(WysKlaw+OdstPionKlaw),
         )
+        klawisz_res_liczba.setFont(Font(0.2*WysKlaw))
         powierzchnia.getChildren().add(klawisz_res_liczba)
         klawisz_res_total.relocate(
             OdstLewKlaw,
             staly_pionowy_odstep+5*(WysKlaw+OdstPionKlaw),
         )
+        klawisz_res_total.setFont(Font(0.2*WysKlaw))
         powierzchnia.getChildren().add(klawisz_res_total)
         //
         for(a in 0..9)
@@ -157,6 +168,8 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         klawisz_res_liczba.setPrefSize(2*SzerKlaw,WysKlaw)
         klawisz_res_total.setOnAction(this)
         klawisz_res_total.setPrefSize(2*SzerKlaw,WysKlaw)
+
+        //a
 
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
         stage.title = "Okno"
