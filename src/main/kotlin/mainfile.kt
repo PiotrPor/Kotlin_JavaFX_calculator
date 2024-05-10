@@ -10,19 +10,19 @@ import javafx.event.ActionEvent
 import kotlin.math.sqrt
 
 //potrzebne stale
-const val OdstGorKlaw: Double = 10.0 //odstep od gornej krawedzi okna
-const val OdstLewKlaw: Double = 10.0 //odstep od lewej krawedzi okna
-const val SzerTekst: Double = 360.0
-const val WysTekst: Double = 40.0
-const val OdstKlawTekst: Double = 20.0 //odstep pionowo miedzy polem tekstowym a klawiszami
-const val SzerKlaw: Double = 75.0 //50 //szerokosc klawisza
-const val WysKlaw: Double = 75.0 //50 //wysokosc klawisza
-const val OdstPionKlaw: Double = 20.0 //odstep miedzy klawiszami w osi pionowej
-const val OdstPozKlaw: Double = 20.0 //odstep miedzy klawiszami w osi poziomej
+const val OdstGorKlaw: Double = 13.0 //odstep od gornej krawedzi okna
+const val OdstLewKlaw: Double = 13.0 //odstep od lewej krawedzi okna
+const val OdstKlawTekst: Double = 26.0 //odstep pionowo miedzy polem tekstowym a klawiszami
+const val SzerKlaw: Double = 100.0 //50 //szerokosc klawisza
+const val WysKlaw: Double = 100.0 //50 //wysokosc klawisza
+const val OdstPionKlaw: Double = 26.0 //odstep miedzy klawiszami w osi pionowej
+const val OdstPozKlaw: Double = 26.0 //odstep miedzy klawiszami w osi poziomej
+const val SzerTekst = 4*SzerKlaw + 3*OdstPozKlaw
+const val WysTekst: Double = 70.0
 const val staly_pionowy_odstep = OdstGorKlaw+WysTekst+OdstKlawTekst
 //
-const val SzerokoscOkna : Double = 800.0
-const val WysokoscOkna : Double = 700.0
+const val SzerokoscOkna = SzerTekst + 2*OdstLewKlaw
+const val WysokoscOkna = staly_pionowy_odstep+6*WysKlaw+5*OdstPionKlaw+OdstGorKlaw
 
 class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
     var wyswietlacz = TextField()
