@@ -154,7 +154,7 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         klawisz_pierwiastka.setOnAction(this)
         klawisz_pierwiastka.setPrefSize(SzerKlaw,WysKlaw)
         klawisz_res_liczba.setOnAction(this)
-        klawisz_res_liczba.setPrefSize(SzerKlaw,WysKlaw)
+        klawisz_res_liczba.setPrefSize(2*SzerKlaw,WysKlaw)
         klawisz_res_total.setOnAction(this)
         klawisz_res_total.setPrefSize(2*SzerKlaw,WysKlaw)
 
