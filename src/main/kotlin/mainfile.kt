@@ -65,11 +65,9 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
     }
 
     override fun start(stage: Stage) {
-        //val korzen = StackPane()
         val powierzchnia = Pane()
 
-        //var wyswietlacz = TextField()
-        klawisze_cyfr = arrayOf(Button("0"),
+                klawisze_cyfr = arrayOf(Button("0"),
             Button("1"), Button("2"), Button("3"),
             Button("4"), Button("5"), Button("6"),
             Button("7"), Button("8"), Button("9"),
@@ -83,7 +81,6 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         {
             for(b in 0..2)
             {
-                //val przycisk = Button(nr.toString())
                 klawisze_cyfr[3*a+b+1].relocate(
                     OdstLewKlaw+b*(SzerKlaw+OdstPozKlaw),
                     staly_pionowy_odstep+a*(WysKlaw+OdstPionKlaw)
@@ -169,8 +166,6 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         klawisz_res_total.setOnAction(this)
         klawisz_res_total.setPrefSize(2*SzerKlaw,WysKlaw)
 
-        //a
-
         val scena = Scene(powierzchnia, SzerokoscOkna, WysokoscOkna)
         stage.title = "Okno"
         stage.scene = scena
@@ -210,7 +205,7 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
             }
             else
             {
-                B = wynik
+                A = wynik
                 wyswietlacz.text = wynik.toString()
             }
         }
@@ -240,16 +235,18 @@ class OknoKalkulatora : Application(), EventHandler<ActionEvent> {
         }
         if(numer_wybranej_operacji != -1)
         {
-            wybrana_operacja = TypDzialania.entries.get(numer_wybranej_operacji)
+            //wybrana_operacja = TypDzialania.entries.get(numer_wybranej_operacji)
             if(!wpisano_pierwsza_liczbe)
             {
-                wpisano_pierwsza_liczbe = true //rozpisac bardziej?
+                wybrana_operacja = TypDzialania.entries.get(numer_wybranej_operacji)
+                wpisano_pierwsza_liczbe = true
                 wpisano_pierwsza_cyfre = false
                 A = wyswietlacz.text.toDouble()
             }
             else
             {
                 nacisniecie_rowna_sie()
+                wybrana_operacja = TypDzialania.entries.get(numer_wybranej_operacji)
                 wpisano_pierwsza_cyfre = false
             }
         }
